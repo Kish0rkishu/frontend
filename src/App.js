@@ -6,6 +6,10 @@ function App() {
 
   const [InvoiceNumber, setInvoiceNumber] = useState('');
 
+  const [CustomerName, setCustomerName] = useState('');
+
+  const [CustomerAddress, setCustomerAddress] = useState('');
+
   const [Dates, setDates] = useState('');
 
   const [view, setView] = useState(true);
@@ -48,7 +52,9 @@ function App() {
           <div className='containers' >
             <div className="form">
               <div className="inputs">
-                <input type="text" placeholder='Invoice Number' value={InvoiceNumber} onChange={(e) => setInvoiceNumber(e.target.value)} />
+                <input type="text" placeholder='Invoice Number' value={InvoiceNumber} onChange={(e) => setInvoiceNumber(e.target.value)} /><br></br>
+                <input type="text" placeholder='Costomer Name' value={CustomerName} onChange={(e) => setCustomerName(e.target.value)} /><br></br>
+                <input type="text" placeholder='Costomer Adress' value={CustomerAddress} onChange={(e) => setCustomerAddress(e.target.value)} />
               </div>
               <div className="buttons">
                 <button onClick={Create} >Create ➡️ </button>
@@ -56,7 +62,7 @@ function App() {
             </div>
           </div>
           :
-          <PdfTemplate InvoiceNumber={InvoiceNumber} date={Dates}  />
+          <PdfTemplate InvoiceNumber={InvoiceNumber} date={Dates} CustomerName={CustomerName} CustomerAddress={CustomerAddress}  />
       }
     </>
   );

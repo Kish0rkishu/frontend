@@ -14,7 +14,8 @@ function PdfTemplate(props) {
     const [Quantity ,setQuantity]= useState('');
     const [Amount, setAmount] = useState(0);
 
-    const [Discount, setDiscount] = useState(props.discount);
+    
+    const [Discount, setDiscount] = useState(0); // New state for discount percentage
 
     // const [productName, setProductName] = useState('');
     // const [productAmout, setProductAmount] = useState(0);
@@ -39,10 +40,21 @@ function PdfTemplate(props) {
     let sum = 0;
     List.forEach(amount => {
         sum += parseInt(amount.amount)
+    
     })
+    
     // setTotal(sum)
     console.log(`Sum is = ${sum}`);
-     const totals=sum
+   
+     
+    // Subtract the discount from the total sum
+  const discountedTotal = sum - (sum * Discount) / 100;
+  
+  
+  console.log(`Discount total is = ${discountedTotal}`)
+  const totals=discountedTotal
+  
+  
     
     function pushdata(){
         axios.post('http://localhost:5000/register',{totals})
@@ -57,6 +69,7 @@ function PdfTemplate(props) {
             alert('data not pushed')
         })
     }
+    
     return (
         <>
             <div className="container" ref={ref} >
@@ -70,15 +83,32 @@ function PdfTemplate(props) {
                                     </div>
                                     <div className="col-md-8 text-right bbc">
                                         <h4 style={{ color: '#325aa8' }}><strong>KISHOR STORES</strong></h4>
-                                        <p>(+91)7619634534</p>
+                                        <p>7619634534</p>
                                         <p>kishor.n382003@gmail.com</p>
+                                        <p>Vijaynagara 2nd Block Opp Sigma Mall Bangalore</p>
                                     </div>
                                 </div>
                                 <br />
                                 <div className="row">
                                     <div className="col-md-12 text-center">
-                                        <h2 style={{ color: '#325aa8' }} >INVOICE</h2>
-                                        <h5> Id: {props.InvoiceNumber}</h5>
+                                        <h2 style={{ color: '#325aa8' }} >INVOICE BILL</h2>
+                                        <h5> ID: {props.InvoiceNumber}</h5>
+                                    </div>
+                                    <div className="col-1">
+                                        <h5 style={{ color: '#1E32C7'}}><u>CustamerName:</u><b style={{color:'#000000'}}>{props.CustomerName}</b></h5><br></br>
+                                        <h5 style={{ color: '#1E32C7'}}><u>CustamerAddress:</u><b style={{color:'#000000'}}><strong>{props.CustomerAddress}</strong></b></h5>
+                                    </div>
+                                    <div>
+                                        {/* Slot to enter discount percentage */}
+                                        <label>
+                                        Discount Percentage:
+                                        <input
+                                            type="number"
+                                            value={Discount}
+                                            onChange={(e) => setDiscount(e.target.value)}
+                                            placeholder="Enter discount percentage"
+                                        />
+                                        </label>
                                     </div>
                                 </div>
                                 <br />
@@ -90,6 +120,7 @@ function PdfTemplate(props) {
                                                 <th><h5>Quantity</h5></th>
                                                 <th><h5>Amount</h5></th>
                                             </tr>
+                                           
                                         </thead>
                                         <tbody>
                                             {
@@ -109,9 +140,7 @@ function PdfTemplate(props) {
                                                     <p>
                                                         <strong>Total Amount: </strong>
                                                     </p>
-                                                    {/* <p>
-                                                        <strong>Discount: </strong>
-                                                    </p> */}
+                                                        <strong>Discounted Amount: </strong>
                                                     <p>
                                                         <strong>Payable Amount: </strong>
                                                     </p>
@@ -120,17 +149,19 @@ function PdfTemplate(props) {
                                                     <p>
                                                         <strong><i className="fas fa-rupee-sign" area-hidden="true"></i> ₹ {sum}</strong>
                                                     </p>
-                                                    {/* <p>
-                                                        <strong><i className="fas fa-rupee-sign" area-hidden="true"></i> ₹ {Discount} </strong>
-                                                    </p> */}
                                                     <p>
-                                                        <strong><i className="fas fa-rupee-sign" area-hidden="true"></i> ₹ {sum}</strong>
+                                                        <strong>
+                                                            <i className="fas fa-rupee-sign" area-hidden="true"></i> ₹ {discountedTotal}
+                                                        </strong>
+                                                    </p>
+                                                    <p>
+                                                        <strong><i className="fas fa-rupee-sign" area-hidden="true"></i> ₹ {discountedTotal}</strong>
                                                     </p>
                                                 </td>
                                             </tr>
                                             <tr style={{ color: '#F81D2D' }}>
                                                 <td className="text-right"><h4><strong>Total:</strong></h4></td>
-                                                <td className="text-left"><h4><strong><i className="fas fa-rupee-sign" area-hidden="true"></i> ₹ {sum} </strong></h4></td>
+                                                <td className="text-left"><h4><strong><i className="fas fa-rupee-sign" area-hidden="true"></i> ₹ {discountedTotal} </strong></h4></td>
                                             </tr>
                                             <button onClick={pushdata}>push</button>
                                         </tbody>
@@ -142,6 +173,7 @@ function PdfTemplate(props) {
                                         <br />
                                         <p><b>KISHOR PROVISION STORES</b></p>
                                         <p><b>Contact:7619634534</b></p>
+                                        <p><b>Vijaynagara 2nd Block Opp Sigma Mall Bangalore</b></p>
                                     </div>
                                 </div>
                             </div>
