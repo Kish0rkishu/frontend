@@ -10,6 +10,8 @@ function App() {
 
   const [CustomerAddress, setCustomerAddress] = useState('');
 
+  const [Discount, setDiscount] = useState('');
+
   const [Dates, setDates] = useState('');
 
   const [view, setView] = useState(true);

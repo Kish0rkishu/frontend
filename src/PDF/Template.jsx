@@ -72,7 +72,17 @@ function PdfTemplate(props) {
     
     return (
         <>
-            <div className="container" ref={ref} >
+         <div
+        className="container"
+        ref={ref}
+        style={{
+          backgroundImage: 'url("C:\Users\ASUS\OneDrive\Desktop\invo app\invioce\src\PDF\Images\image.jpg")',
+          backgroundSize: 'cover',
+          backgroundPosition: 'center',
+          backgroundRepeat: 'no-repeat',
+          fontFamily: 'Phudu, sans-serif', // Add your preferred font-family
+        }}
+      >
                 <div className="container">
                     <div className="row">
                         <div >
@@ -95,8 +105,8 @@ function PdfTemplate(props) {
                                         <h5> ID: {props.InvoiceNumber}</h5>
                                     </div>
                                     <div className="col-1">
-                                        <h5 style={{ color: '#1E32C7'}}><u>CustamerName:</u><b style={{color:'#000000'}}>{props.CustomerName}</b></h5><br></br>
-                                        <h5 style={{ color: '#1E32C7'}}><u>CustamerAddress:</u><b style={{color:'#000000'}}><strong>{props.CustomerAddress}</strong></b></h5>
+                                        <h5 style={{ color: '#1E32C7'}}><u><b>CustamerName:</b></u><b style={{color:'#000000'}}>{props.CustomerName}</b></h5><br></br>
+                                        <h5 style={{ color: '#1E32C7'}}><u><b>CustamerAddress:</b></u><b style={{color:'#000000'}}>{props.CustomerAddress}</b></h5>
                                     </div>
                                     <div>
                                         {/* Slot to enter discount percentage */}
@@ -182,7 +192,7 @@ function PdfTemplate(props) {
                 </div>
             </div>
 
-            <ReactPrint trigger={() => <button>Print</button>} content={() => ref.current} documentTitle={`INVOICE ${props.InvoiceNumber}`} />
+            <ReactPrint trigger={() => <button>Print</button>} content={() => ref.current} documentTitle={`INVOICE ${props.InvoiceNumber}`} bodyClass="print-body" />
 
             <button onClick={() => setAirPopup(true)} >Add Items</button>
 
